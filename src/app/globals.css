@@ -2,22 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0; 
+  box-sizing: border-box; 
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --hue-primary:213;
+  --hue-secondary:220;
+  --hue-bg:0;
+  --bg: hsl(var(--hue-bg),0%,100%);
+  --primary:    hsl(var(--hue-primary),97%,39%);
+  --primary-l:  hsl(var(--hue-primary),97%,89%);
+  --text-d:     hsl(var(var(--hue-primary)),100%,17%);
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text-d);
+  background: var(--bg);
 }
 
 @layer utilities {
