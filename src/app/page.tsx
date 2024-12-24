@@ -1,8 +1,7 @@
 import CreatePayment from "./PaymentGateway/screens/CreatePayment/CreatePayment";
-import PaymentResumeScreen from "./PaymentGateway/screens/PaymentResume/PaymentResumeScreen";
 import Footer from "./shared/components/Footer";
 
-export default async function App() {
+export default function Home() {
   return (
     <>
       <main className="h-screen">
@@ -12,4 +11,3 @@ export default async function App() {
     </>
   );
 }
-//

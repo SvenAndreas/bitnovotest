@@ -9,16 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.62.8",
-    "install": "^0.13.0",
     "next": "14.2.18",
-    "npm": "^11.0.0",
     "qrcode.react": "^4.2.0",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
-    "@tanstack/eslint-plugin-query": "^5.62.1",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

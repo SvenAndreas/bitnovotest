@@ -1,7 +1,5 @@
 import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
-import TanstakProvider from "./shared/TanstakProvider/TanstakProvider";
 import { Mulish } from "next/font/google";
 
 const mulish = Mulish({
@@ -26,7 +24,7 @@ export default function RootLayout({
       <body
         className={`${mulish.className}  antialiased h-screen`}
       >
-        <TanstakProvider>{children}</TanstakProvider>
+        {children}
       </body>
     </html>
   );
