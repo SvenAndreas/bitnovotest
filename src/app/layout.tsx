@@ -2,16 +2,13 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import TanstakProvider from "./shared/TanstakProvider/TanstakProvider";
+import { Mulish } from "next/font/google";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
+const mulish = Mulish({
+  subsets: ['latin'],
+  weight: ['400','600', '700'], 
+  style: ['normal', 'italic'],
+  variable: '--font-mulish', 
 });
 
 export const metadata: Metadata = {
@@ -27,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${mulish.className}  antialiased h-screen`}
       >
         <TanstakProvider>{children}</TanstakProvider>
       </body>
