@@ -24,13 +24,17 @@ function MakePaymentWrapper() {
       order?.input_currency === "ETH_TEST5"
   );
   const paymentUri = order ? order.payment_uri : orderCreated.payment_uri;
+
   const expectedInputAmount = order
     ? order.expected_input_amount
     : orderCreated.expected_input_amount;
+
   const address = order ? order.address : orderCreated.address;
+
   const currecenySymbol = cleanCurrencySymbol(
     order ? order.input_currency : orderCreated.input_currency
   );
+  
   const { connectMetamask, sendTransaction } = useMetamask();
 
   const handleButtonClick = (button: "Web 3" | "Smart QR") => {
