@@ -18,7 +18,7 @@ npm run dev
 Esto iniciará la aplicación en http://localhost:3000.
 
 ## Variables de entorno
-El archivo .env ya está incluido en el repositorio por motivos de simplicidad, dado que es un desafío técnico. Asegúrate de revisar y ajustar las variables de entorno según sea necesario.
+El archivo .env ya está incluido en el repositorio por motivos de simplicidad, dado que es un desafío técnico.
 
 ## Funcionalidad de Metamask
 El proyecto incluye la integración de Metamask solo si se selecciona la moneda ETH.
