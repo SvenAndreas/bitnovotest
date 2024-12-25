@@ -10,9 +10,10 @@ import Timer from "./Timer";
 import { cleanCurrencySymbol } from "@/app/PaymentGateway/utils/cleanCurrencySymbol";
 import useMetamask from "../hooks/useMetamask";
 import { useState } from "react";
+import timer from "../../../../shared/assets/timer.svg";
 
 function MakePaymentWrapper() {
-  const { order } = usePaymentGatewayContext();
+  const { order, isLoading } = usePaymentGatewayContext();
   const { getItem } = useLocalStorage("order_created");
   const orderCreated: OrderCreated = getItem();
   const [copiedField, setCopiedField] = useState<string | null>(null);
@@ -34,7 +35,7 @@ function MakePaymentWrapper() {
   const currecenySymbol = cleanCurrencySymbol(
     order ? order.input_currency : orderCreated.input_currency
   );
-  
+
   const { connectMetamask, sendTransaction } = useMetamask();
 
   const handleButtonClick = (button: "Web 3" | "Smart QR") => {
@@ -72,7 +73,14 @@ function MakePaymentWrapper() {
     <div className="p-[32px]">
       <p className="mb-[24px] font-w-bold text-font-l">Realiza el pago</p>
       <div className="w-[583px] gap-[24px] border-[1px] flex flex-col rounded-[16px] justify-between p-[32px] items-center border-tertiary shadow-md">
-        <Timer />
+        {isLoading ? (
+          <div className="flex items-center gap-[4px]">
+            <Image src={timer} width={24} height={24} alt="timer" />
+            <p className="text-font-s font-[600]">15:00</p>
+          </div>
+        ) : (
+          <Timer />
+        )}
 
         <div className="flex gap-[4px]">
           <SmallButton

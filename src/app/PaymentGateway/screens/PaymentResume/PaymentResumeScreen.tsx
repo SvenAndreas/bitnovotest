@@ -11,13 +11,14 @@ import { OrderCreated } from "../../types/order";
 import { usePaymentGatewayContext } from "../../context/PaymentGatewayContext";
 
 function PaymentResumeScreen() {
-  const { setOrderDetail } = usePaymentGatewayContext();
+  const { setOrderDetail,setIsLoading } = usePaymentGatewayContext();
   const router = useRouter();
   const { getItem } = useLocalStorage("order_created");
   const { setItem } = useLocalStorage("order_detail");
   const orderCreated: OrderCreated = getItem();
   useEffect(() => {
     if (orderCreated) {
+      setIsLoading(true);
       fetchOrderDetail(orderCreated.identifier)
         .then((res) => {
           setOrderDetail(res);
@@ -25,7 +26,9 @@ function PaymentResumeScreen() {
         })
         .catch((err) => {
           console.log(err);
-        });
+        }).finally(() => {
+          setIsLoading(false);
+        })
     } else {
       router.back();
     }

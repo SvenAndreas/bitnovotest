@@ -1,8 +1,12 @@
 import { OrderDetail } from "@/app/PaymentGateway/types/paymentDetails";
+import { useLocalStorage } from "@/app/shared/hooks/useLocalStorage";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 function useWebSocket(identifier: string) {
+  const {removeItem} = useLocalStorage("order_created");
+  const {removeItem: removeOrderDetail} = useLocalStorage("order_detail");
+  const {removeItem:removeConcept} = useLocalStorage('order_created_concept');
   const router = useRouter();
   useEffect(() => {
     if (!identifier) return;
@@ -21,6 +25,9 @@ function useWebSocket(identifier: string) {
         if (data.status === "EX" || data.status === "OC") {
           router.replace("/payment/feedback/error");
         }
+        removeConcept();
+        removeOrderDetail()
+        removeItem();
       } catch (error) {
         console.error("Error al parsear el mensaje:", error);
       }
