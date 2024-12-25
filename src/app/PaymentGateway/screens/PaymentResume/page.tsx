@@ -1,17 +1,14 @@
-import React from 'react'
-import SectionContainer from '../../components/SectionContainer'
-import PaymentFeedback from './components/PaymentFeedback'
 
-function PaymentResumeScreen() {
+import dynamic from 'next/dynamic';
+
+const PaymentResumeScreen = dynamic(() => import('./PaymentResumeScreen'), {
+  ssr: false,
+});
+function PaymentResume() {
+
   return (
-    <SectionContainer>
-      {/* <div className="flex items-start gap-[32px]">
-        <ResumeWrapper />
-        <MakePaymentWrapper/>
-      </div> */}
-      <PaymentFeedback/>
-    </SectionContainer>
-  )
+    <PaymentResumeScreen/>
+  );
 }
 
-export default PaymentResumeScreen
+export default PaymentResume

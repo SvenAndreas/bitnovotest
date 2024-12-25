@@ -6,16 +6,26 @@ import SelectInputCreatePayment from "./components/SelectInputCreatePayment";
 import useGetCurrencies from "./hooks/useGetCurrencies";
 import { ChangeEvent, useCallback, useState } from "react";
 import SelectCurrenciesWrapper from "./components/SelectCurrenciesWrapper";
-import { Currency } from "../../types/currency";
 import { getCurrencyLimits } from "./utils/getCurrencyLimits";
 import { useSetMinMaxCurrencyAmount } from "./hooks/useSetMinMaxCurrencyAmount";
 import { validAmountFormat } from "./utils/validAmountFormat";
 import { validateAmountWithinLimits } from "./utils/validateWithinLimits";
 import { useVerifyIfFormIsValid } from "./hooks/useVerifyIfFormIsValid";
+import { createOrder } from "../../services/api/createOrder";
+import { usePaymentGatewayContext } from "../../context/PaymentGatewayContext";
+import { useRouter } from "next/navigation";
+import { useLocalStorage } from "@/app/shared/hooks/useLocalStorage";
 
 function CreatePayment() {
-  const [amount, setAmount] = useState("");
-  const [concept, setConcept] = useState("");
+  const {
+    amount,
+    setAmount,
+    concept,
+    setConcept,
+    setOrder,
+    setIsLoading,
+    isLoading,
+  } = usePaymentGatewayContext();
   const [isSelectCurrencyOpen, setIsSelectCurrencyOpen] = useState(false);
   const [selectedCurrency, setSelectedCurrency] = useState<{
     symbol: string;
@@ -25,11 +35,12 @@ function CreatePayment() {
     name: "Bitcoin Test BTC",
   });
   const [isFormValid, setIsFormValid] = useState(false);
-
   const [error, setError] = useState<{
     amount: string;
     concept: string;
   }>({ amount: "", concept: "" });
+
+  const router = useRouter();
 
   const [currencyMinMaxAmount, setCurrencyMinMaxAmount] = useState<{
     minAmount: string;
@@ -37,12 +48,16 @@ function CreatePayment() {
   }>({ minAmount: "0", maxAmount: "0" });
 
   const { currencies } = useGetCurrencies();
+
+  
+  const { setItem } = useLocalStorage("order_created");
+  const { setItem:setOrderCreatedConcept } = useLocalStorage('order_created_concept');
+
   useSetMinMaxCurrencyAmount(
     currencies,
     selectedCurrency.symbol,
     setCurrencyMinMaxAmount
   );
-
   useVerifyIfFormIsValid(error, concept, amount, setIsFormValid);
 
   const handleChangeAmount = useCallback(
@@ -51,25 +66,28 @@ function CreatePayment() {
 
       if (validAmountFormat(input)) {
         setAmount(input);
-        const error = validateAmountWithinLimits(
-          input,
-          currencyMinMaxAmount.minAmount,
-          currencyMinMaxAmount.maxAmount
-        );
-        if (error) {
-          setError((prev) => ({
-            ...prev,
-            amount: error,
-          }));
-        } else {
-          setError((prev) => ({
-            ...prev,
-            amount: "",
-          }));
-        }
-      }
+        setError((prev) => ({
+          ...prev,
+          amount: "",
+        }));
 
-      if (input === "") {
+        if (
+          currencyMinMaxAmount.minAmount !== "0" &&
+          currencyMinMaxAmount.maxAmount !== "0"
+        ) {
+          const error = validateAmountWithinLimits(
+            input,
+            currencyMinMaxAmount.minAmount,
+            currencyMinMaxAmount.maxAmount
+          );
+          if (error) {
+            setError((prev) => ({
+              ...prev,
+              amount: error,
+            }));
+          }
+        }
+      } else if (input === "") {
         setAmount("");
         setError((prev) => ({
           ...prev,
@@ -124,6 +142,24 @@ function CreatePayment() {
       </SectionContainer>
     );
   }
+  const handleSubmit = () => {
+    setIsLoading(true);
+    createOrder(amount, selectedCurrency.symbol)
+      .then((res) => {
+        setOrder(res);
+        setItem(res);
+      })
+      .catch((err) => {
+        console.log(err);
+        setError(err.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+        setOrderCreatedConcept(concept);
+        router.push("/payment/resume");
+      });
+  };
+
   return (
     <SectionContainer>
       <div className="p-[32px] rounded-[6px] border-tertiary shadow-md border-[1px] w-[673px] h-[530px] flex flex-col gap-[32px]">
@@ -148,7 +184,12 @@ function CreatePayment() {
             error={error.concept ? error.concept : undefined}
           />
         </div>
-        <PrimaryButton isActive={isFormValid} text="Continuar" />
+        <PrimaryButton
+          isLoading={isLoading}
+          onClick={handleSubmit}
+          isActive={isFormValid}
+          text="Continuar"
+        />
       </div>
       {/* <SelectCurrenciesWrapper/> */}
     </SectionContainer>

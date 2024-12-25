@@ -3,6 +3,7 @@ import arrow from "../../../../shared/assets/arrow-right.svg";
 import Image from "next/image";
 import { Currency } from "@/app/PaymentGateway/types/currency";
 import imagesMap from "../utils/imagesMap";
+import { cleanCurrencySymbol } from "@/app/PaymentGateway/utils/cleanCurrencySymbol";
 
 interface SelectCurrencyProps {
   handleSelectCurrency: (currency: { symbol: string; name: string }) => void;
@@ -18,7 +19,7 @@ function SelectCurrency({
   handleOpenSelectCurreny,
 }: SelectCurrencyProps) {
   const cleanedName = currency.name.replace(/( Sepolia| Test.*| ETH)$/, "");
-  const cleanedSymbol = currency.symbol.replace(/_TEST.*/, "");
+  const cleanedSymbol = cleanCurrencySymbol(currency.symbol);
   const icon = imagesMap[currency.symbol];
 
   return (
