@@ -1,7 +1,7 @@
 'use client'
 import React, { createContext, useState, ReactNode, useContext } from "react";
 import { OrderCreated } from "../types/order";
-import { PaymentDetails } from "../types/paymentDetails";
+import { OrderDetail } from "../types/paymentDetails";
 
 interface PaymentGatewayContextType {
   amount: string;
@@ -12,8 +12,8 @@ interface PaymentGatewayContextType {
   setIsLoading: (isLoading: boolean) => void;
   order: OrderCreated | null;
   setOrder: (order: OrderCreated) => void;
-  orderDetail: PaymentDetails | null
-  setOrderDetail: (orderDetail: PaymentDetails) => void
+  orderDetail: OrderDetail | null
+  setOrderDetail: (orderDetail: OrderDetail) => void
 }
 
 const PaymentGatewayContext = createContext<
@@ -30,7 +30,7 @@ export const PaymentGatewayProvider = ({
   const [concept, setConcept] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [order, setOrder] = useState<OrderCreated | null>(null);
-  const [orderDetail,setOrderDetail] = useState<PaymentDetails | null>(null)
+  const [orderDetail,setOrderDetail] = useState<OrderDetail | null>(null)
 
   return (
     <PaymentGatewayContext.Provider

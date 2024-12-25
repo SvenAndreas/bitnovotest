@@ -24,7 +24,7 @@ enum Status {
   }
 
   
- export type PaymentDetails = {
+ export type OrderDetail = {
     identifier: string;
     reference: string | null;
     created_at: string;

@@ -1,7 +1,7 @@
-import { PaymentDetails } from "../../types/paymentDetails";
+import { OrderDetail } from "../../types/paymentDetails";
 import { API_ROUTES, DEVICE_ID } from "../ApiRoute";
 
-export const fetchOrderDetail = async (identifier:string): Promise<PaymentDetails> => {
+export const fetchOrderDetail = async (identifier:string): Promise<OrderDetail> => {
   const response = await fetch(`${API_ROUTES.GET_ORDER_DETAIL}${identifier}`, {
     method: "GET",
     headers: {

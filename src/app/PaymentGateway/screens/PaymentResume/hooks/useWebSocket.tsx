@@ -1,4 +1,4 @@
-import { PaymentDetails } from "@/app/PaymentGateway/types/paymentDetails";
+import { OrderDetail } from "@/app/PaymentGateway/types/paymentDetails";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -17,7 +17,7 @@ function useWebSocket(identifier: string) {
 
     socket.onmessage = (event) => {
       try {
-        const data: PaymentDetails = JSON.parse(event.data);
+        const data: OrderDetail = JSON.parse(event.data);
         if (data.status === "CO" || data.status === "AC") {
           router.replace("/payment/feedback/success");
         }
@@ -32,7 +32,7 @@ function useWebSocket(identifier: string) {
     socket.onclose = ()=> {
       console.log("Conexión WebSocket cerrada");
     }
-    
+
     return () => {
       socket.close();
     };
