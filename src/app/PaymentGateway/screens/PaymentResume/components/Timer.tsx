@@ -17,9 +17,12 @@ function Timer() {
   const storedOrderDetail: OrderDetail = getOrderDetail();
 
   const [timeLeft, setTimeLeft] = useState(() => {
-    return orderDetail
-      ? 15 * 60
-      : calculateExpirationTimeInSeconds(storedOrderDetail.expired_time);
+    if (orderDetail) {
+      return calculateExpirationTimeInSeconds(orderDetail.expired_time);
+    } else if (storedOrderDetail) {
+      return calculateExpirationTimeInSeconds(storedOrderDetail.expired_time);
+    }
+    return 15 * 60;
   });
 
   useEffect(() => {
