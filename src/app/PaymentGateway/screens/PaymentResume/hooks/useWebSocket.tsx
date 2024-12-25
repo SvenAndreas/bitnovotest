@@ -11,9 +11,6 @@ function useWebSocket(identifier: string) {
       `wss://payments.pre-bnvo.com/ws/${identifier}`
     );
 
-    socket.onopen = () => {
-      console.log("Conexión WebSocket abierta");
-    };
 
     socket.onmessage = (event) => {
       try {
@@ -28,10 +25,6 @@ function useWebSocket(identifier: string) {
         console.error("Error al parsear el mensaje:", error);
       }
     };
-
-    socket.onclose = ()=> {
-      console.log("Conexión WebSocket cerrada");
-    }
 
     return () => {
       socket.close();

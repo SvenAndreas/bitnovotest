@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, memo } from "react";
 
 function InputCreatePayment({
   error,
@@ -27,4 +27,4 @@ function InputCreatePayment({
   );
 }
 
-export default InputCreatePayment;
+export default memo(InputCreatePayment)

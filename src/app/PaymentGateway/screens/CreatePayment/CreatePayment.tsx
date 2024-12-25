@@ -125,7 +125,6 @@ function CreatePayment() {
     []
   );
 
-  //PREGUNTAR PQ SIN LA DEPENDECIA NO ME GESTIONABA EL CAMBIO DE ESTADO, QUEDABA SIEMPRE EN EL QUE LO HABIA TOCADO
   const handleOpenSelectCurreny = useCallback(() => {
     setIsSelectCurrencyOpen(!isSelectCurrencyOpen);
   }, [isSelectCurrencyOpen]);
@@ -191,7 +190,6 @@ function CreatePayment() {
           text="Continuar"
         />
       </div>
-      {/* <SelectCurrenciesWrapper/> */}
     </SectionContainer>
   );
 }

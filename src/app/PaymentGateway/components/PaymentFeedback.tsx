@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import check from '../../shared/assets/success.svg'
-// import PrimaryButton from '@/app/shared/components/PrimaryButton'
 import error from '../../shared/assets/error.svg'
 function PaymentFeedback({success}: {success: boolean}) {
   const text = success ? 'Pago completado' : 'Pago cancelado'
@@ -11,7 +10,6 @@ function PaymentFeedback({success}: {success: boolean}) {
             <p className='text-font-l font-w-bold'>¡{text}!</p>
             <p className='text-font-xn text-[#647184] text-center'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, repellat? Quae, sapiente, quas impedit eum est dignissimos quibusdam, eligendi magnam asperiores nam aspernatur. Tempore quisquam distinctio sit assumenda veniam nisi?</p>
         </div>
-        {/* <PrimaryButton text='Crear nuevo pago'/> */}
     </div>
   )
 }

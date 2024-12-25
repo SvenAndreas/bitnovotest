@@ -33,7 +33,7 @@ function SelectCurrenciesWrapper({
         <h2 className="font-w-bold text-font-m">Seleccionar criptomoneda</h2>
         <Image
           width={22}
-          className="cursor-pointer"
+          className="cursor-pointer w-[22px] h-[22px]"
           onClick={handleOpenSelectCurreny}
           height={22}
           src={close}
