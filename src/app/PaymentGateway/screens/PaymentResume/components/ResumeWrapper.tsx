@@ -17,8 +17,6 @@ function ResumeWrapper() {
   );
   const icon = imagesMap[order ? order.input_currency : orderCreated.input_currency];
 
-  console.log(orderCreated,'ORDER CREATED')
-  console.log(concept,'CONCEPTO')
   const date = formatNowDate();
   return (
     <div className="p-[32px]">
