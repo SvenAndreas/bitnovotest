@@ -19,7 +19,7 @@ function MakePaymentWrapper() {
   const [activeButton, setActiveButton] = useState<"Web 3" | "Smart QR">(
     "Smart QR"
   );
-  const [isWeb3Enabled, setIsWeb3Enabled] = useState(
+  const [isWeb3Enabled] = useState(
     orderCreated.input_currency === "ETH_TEST5" ||
       order?.input_currency === "ETH_TEST5"
   );
@@ -48,14 +48,14 @@ function MakePaymentWrapper() {
     }
   };
 
-  const copyToClipboard = async (field: string,text: string) => {
+  const copyToClipboard = async (field: string, text: string) => {
     if (navigator.clipboard) {
       try {
         setCopiedField(field);
         await navigator.clipboard.writeText(text);
-        setTimeout(()=>{
+        setTimeout(() => {
           setCopiedField(null);
-        },400)
+        }, 400);
       } catch (err) {
         console.error("No se pudo copiar al portapapeles", err);
       }
@@ -102,7 +102,16 @@ function MakePaymentWrapper() {
             <p className="font-w-bold text-font-m">
               {expectedInputAmount} {currecenySymbol}
             </p>
-            <Image onClick={() => copyToClipboard(currecenySymbol,expectedInputAmount.toString())} className="cursor-pointer" src={copy} alt="copy" width={18} height={18} />
+            <Image
+              onClick={() =>
+                copyToClipboard(currecenySymbol, expectedInputAmount.toString())
+              }
+              className="cursor-pointer"
+              src={copy}
+              alt="copy"
+              width={18}
+              height={18}
+            />
             {copiedField === currecenySymbol && (
               <div className="bg-primary-d right-[-78px] top-[-7px] absolute text-white font-w-bold p-1 rounded-lg">
                 ¡Copiado!
@@ -114,7 +123,7 @@ function MakePaymentWrapper() {
             <p className="text-cneter max-w-[416px] break-words">{address}</p>
             <Image
               className="cursor-pointer"
-              onClick={() => copyToClipboard(address,address)}
+              onClick={() => copyToClipboard(address, address)}
               src={copy}
               alt="copy"
               width={18}
@@ -132,12 +141,19 @@ function MakePaymentWrapper() {
               <p className="text-font-s">
                 Etiqueta de destino: {order.tag_memo}
               </p>
-              <Image onClick={() => copyToClipboard(order.tag_memo, order.tag_memo)} className="cursor-pointer" src={copy} alt="copy" width={18} height={18} />
+              <Image
+                onClick={() => copyToClipboard(order.tag_memo, order.tag_memo)}
+                className="cursor-pointer"
+                src={copy}
+                alt="copy"
+                width={18}
+                height={18}
+              />
               {copiedField === order.tag_memo && (
-              <div className="bg-primary-d right-[-78px] top-[-7px] absolute text-white font-w-bold p-1 rounded-lg">
-                ¡Copiado!
-              </div>
-            )}
+                <div className="bg-primary-d right-[-78px] top-[-7px] absolute text-white font-w-bold p-1 rounded-lg">
+                  ¡Copiado!
+                </div>
+              )}
             </div>
           )}
         </div>
