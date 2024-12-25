@@ -1,0 +1,40 @@
+{
+    "identifier": "b7d2cd78-0d49-4079-b3d4-ab35fbf5f0bf",
+    "reference": null,
+    "created_at": "2024-12-25T00:18:34.546416+01:00",
+    "edited_at": "2024-12-25T00:20:20.342900+01:00",
+    "status": "CO",
+    "fiat_amount": 10,
+    "crypto_amount": 4.534059,
+    "unconfirmed_amount": 0,
+    "confirmed_amount": 4.534059,
+    "currency_id": "XRP_TEST",
+    "merchant_device_id": 1,
+    "merchant_device": "Bitnovo Test",
+    "address": "rLMaqbxxSjGfKFc3hxAhHar1FNZeZnkARc",
+    "tag_memo": "995325258",
+    "url_ko": null,
+    "url_ok": null,
+    "url_standby": null,
+    "expired_time": "2024-12-25T00:33:36.400008+01:00",
+    "good_fee": true,
+    "notes": null,
+    "rbf": false,
+    "safe": true,
+    "fiat": "EUR",
+    "language": "es",
+    "percentage": 100,
+    "received_amount": 10,
+    "balance_based": "True",
+    "internal_data": null,
+    "transactions": [
+        {
+            "confirmed": true,
+            "currency": "XRP_TEST",
+            "amount": 4.534059,
+            "tx_hash": "7DA1AF65E64045F4D4062F71FF1BA21FD17A204374D20C001F543ED84E8EC602",
+            "block": 3404931,
+            "created_at": "2024-12-25T00:20:20.314651+01:00"
+        }
+    ]
+}

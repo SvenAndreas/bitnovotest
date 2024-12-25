@@ -2,22 +2,53 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0; 
+  box-sizing: border-box; 
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+:root {
+  --hue-primary:213;
+  --hue-secondary:220;
+  --hue-bg:0;
+  --bg: hsl(var(--hue-bg),0%,100%);
+  --primary:    hsl(var(--hue-primary),97%,39%);
+  --primary-l:  hsl(var(--hue-primary),97%,89%);
+  --primary-d:  hsl(var(--hue-primary),26%,80%);
+  --secondary:  hsl(var(--hue-secondary),33%,95%);
+  --secondary-l:hsl(var(--hue-secondary),33%,98%);
+  --tertiary:   hsl(var(--hue-bg),0%,96%);
+  --text-d:     hsl(var(var(--hue-primary)),100%,17%);
+
+
+  --font-xl: 26px;
+  --font-l:  20px;
+  --font-m:  18px;
+  --font-xn: 16px;
+  --font-n:  14px;
+  --font-s:  12px;
+
+  --weight-bold: 700;
+  --weight-normal: 400;  
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text-d);
+  background: var(--bg);
+  font-size: var(--font-n);
+  font-weight:var(--weigth-normal);
 }
 
 @layer utilities {
