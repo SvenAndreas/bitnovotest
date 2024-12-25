@@ -3,7 +3,7 @@ import footer from '../assets/bitnovofooter.svg'
 function Footer() {
   return (
     <footer className="fixed w-full bottom-0 place-items-center p-[16px]">
-        <Image src={footer} alt="footer" />
+        <Image priority={true} src={footer} alt="footer" />
     </footer>
   )
 }

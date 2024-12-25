@@ -63,7 +63,6 @@ const useMetamask = () => {
         method: "wallet_switchEthereumChain",
         params: [{ chainId: "0xAA36A7" }],
       });
-      console.log("Red cambiada a Sepolia");
       alert("Cambio exitoso a Sepolia.");
     } catch (error: any) {
       if (error.code === 4902) {

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useLocalStorage } from "@/app/shared/hooks/useLocalStorage";
 import { OrderDetail } from "@/app/PaymentGateway/types/paymentDetails";
 import { calculateExpirationTimeInSeconds } from "../utils/calculateExpirationTimeInSeconds";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { usePaymentGatewayContext } from "@/app/PaymentGateway/context/PaymentGatewayContext";
 import { usePathname } from "next/navigation";
 

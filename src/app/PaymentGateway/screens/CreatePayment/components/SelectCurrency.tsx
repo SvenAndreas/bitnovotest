@@ -2,8 +2,8 @@ import tick from "../../../../shared/assets/tick-circle.svg";
 import arrow from "../../../../shared/assets/arrow-right.svg";
 import Image from "next/image";
 import { Currency } from "@/app/PaymentGateway/types/currency";
-import imagesMap from "../utils/imagesMap";
 import { cleanCurrencySymbol } from "@/app/PaymentGateway/utils/cleanCurrencySymbol";
+import imagesMap from "@/app/PaymentGateway/utils/imagesMap";
 
 interface SelectCurrencyProps {
   handleSelectCurrency: (currency: { symbol: string; name: string }) => void;
@@ -33,7 +33,15 @@ function SelectCurrency({
       }}
       className="flex gap-[12px] cursor-pointer px-[8px] py-[16px]"
     >
-      <Image width={32} height={32} src={icon} alt="tick" />
+      <Image
+        loading="eager"
+        className="w-[32px] h-[32px]"
+        priority={true}
+        width={32}
+        height={32}
+        src={icon}
+        alt={`${cleanedSymbol} logo`}
+      />
       <div>
         <p className="font-w-bold">
           {cleanedName == "Ethereum Sepolia" ? "Ethereum" : cleanedName}
@@ -41,7 +49,9 @@ function SelectCurrency({
         <p>{cleanedSymbol}</p>
       </div>
       <Image
-        className="ml-auto"
+        className="w-[16px] h-[16px]"
+        width={16}
+        height={16}
         src={selectedCurrency.symbol === currency.symbol ? tick : arrow}
         alt="arrow"
       />

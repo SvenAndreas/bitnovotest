@@ -15,6 +15,7 @@ function MakePaymentWrapper() {
   const { order } = usePaymentGatewayContext();
   const { getItem } = useLocalStorage("order_created");
   const orderCreated: OrderCreated = getItem();
+  const [copiedField, setCopiedField] = useState<string | null>(null);
   const [activeButton, setActiveButton] = useState<"Web 3" | "Smart QR">(
     "Smart QR"
   );
@@ -37,12 +38,29 @@ function MakePaymentWrapper() {
     setActiveButton(button);
   };
   const handleConnect = async () => {
+    if (!isWeb3Enabled) return;
     const isConnected = await connectMetamask();
     if (isConnected) {
       await sendTransaction(
         order ? order.address : orderCreated.address,
         order ? order.expected_input_amount : orderCreated.expected_input_amount
       );
+    }
+  };
+
+  const copyToClipboard = async (field: string,text: string) => {
+    if (navigator.clipboard) {
+      try {
+        setCopiedField(field);
+        await navigator.clipboard.writeText(text);
+        setTimeout(()=>{
+          setCopiedField(null);
+        },400)
+      } catch (err) {
+        console.error("No se pudo copiar al portapapeles", err);
+      }
+    } else {
+      console.warn("Clipboard API no soportada");
     }
   };
 
@@ -79,25 +97,47 @@ function MakePaymentWrapper() {
         </div>
 
         <div className="w-[416px] flex flex-col items-center gap-[12px]">
-          <div className="flex items-center gap-[8px]">
+          <div className="flex items-center gap-[8px] relative">
             <p>Enviar</p>
             <p className="font-w-bold text-font-m">
               {expectedInputAmount} {currecenySymbol}
             </p>
-            <Image src={copy} alt="copy" width={18} height={18} />
+            <Image onClick={() => copyToClipboard(currecenySymbol,expectedInputAmount.toString())} className="cursor-pointer" src={copy} alt="copy" width={18} height={18} />
+            {copiedField === currecenySymbol && (
+              <div className="bg-primary-d right-[-78px] top-[-7px] absolute text-white font-w-bold p-1 rounded-lg">
+                ¡Copiado!
+              </div>
+            )}
           </div>
 
-          <div className="flex items-start gap-[8px]">
+          <div className="flex items-start gap-[8px] relative">
             <p className="text-cneter max-w-[416px] break-words">{address}</p>
-            <Image src={copy} alt="copy" width={18} height={18} />
+            <Image
+              className="cursor-pointer"
+              onClick={() => copyToClipboard(address,address)}
+              src={copy}
+              alt="copy"
+              width={18}
+              height={18}
+            />
+            {copiedField === address && (
+              <div className="bg-primary-d right-[-78px] top-[-7px] absolute text-white font-w-bold p-1 rounded-lg">
+                ¡Copiado!
+              </div>
+            )}
           </div>
           {order?.tag_memo && (
-            <div className="flex items-center gap-[8px]">
+            <div className="flex items-center gap-[8px] relative">
               <Image src={warn} alt="warn" width={24} height={24} />
               <p className="text-font-s">
                 Etiqueta de destino: {order.tag_memo}
               </p>
-              <Image src={copy} alt="copy" width={18} height={18} />
+              <Image onClick={() => copyToClipboard(order.tag_memo, order.tag_memo)} className="cursor-pointer" src={copy} alt="copy" width={18} height={18} />
+              {copiedField === order.tag_memo && (
+              <div className="bg-primary-d right-[-78px] top-[-7px] absolute text-white font-w-bold p-1 rounded-lg">
+                ¡Copiado!
+              </div>
+            )}
             </div>
           )}
         </div>

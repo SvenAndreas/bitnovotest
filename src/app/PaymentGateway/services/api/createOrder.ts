@@ -1,10 +1,10 @@
-import { Order } from "../../types/order";
+import { OrderCreated } from "../../types/order";
 import { API_ROUTES, DEVICE_ID } from "../ApiRoute";
 
 export const createOrder = async (
     expectedOutputAmount: string,
     currencySymbol: string
-): Promise<Order> => {
+): Promise<OrderCreated> => {
     const formData = new FormData();
     formData.append("expected_output_amount", expectedOutputAmount); 
     formData.append("input_currency", currencySymbol);

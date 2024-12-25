@@ -1,8 +1,8 @@
 import Image from "next/image";
 import React from "react";
-import btc from "../../../../shared/assets/btc.svg";
 import arrow_down from "../../../../shared/assets/arrow-down.svg";
-import imagesMap from "../utils/imagesMap";
+import imagesMap from "@/app/PaymentGateway/utils/imagesMap";
+
 function SelectInputCreatePayment({
   handleOpenSelectCurreny,
   selectedCurrency,
@@ -10,7 +10,6 @@ function SelectInputCreatePayment({
   handleOpenSelectCurreny: () => void;
   selectedCurrency: { symbol: string; name: string };
 }) {
-  const cleanedName = selectedCurrency.name.replace(/( Sepolia| Test.*| ETH)$/, "");
   const cleanedSymbol = selectedCurrency.symbol.replace(/_TEST.*/, "");
   const icon = imagesMap[selectedCurrency.symbol];
   return (
@@ -20,7 +19,7 @@ function SelectInputCreatePayment({
         <div className="flex gap-[8px] w-full items-center">
           <Image src={icon} width={20} height={20} alt={`${cleanedSymbol} logo`} />
           <p className="font-w-normal">{cleanedSymbol}</p>
-          <Image className="ml-auto" src={arrow_down} alt="arrow_down" />
+          <Image width={16} height={16} className="ml-auto" src={arrow_down} alt="arrow_down" />
         </div>
       </div>
     </div>
