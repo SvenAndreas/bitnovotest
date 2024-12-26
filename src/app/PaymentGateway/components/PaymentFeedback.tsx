@@ -1,8 +1,15 @@
+'use client'
 import Image from 'next/image'
 import check from '../../shared/assets/success.svg'
 import error from '../../shared/assets/error.svg'
+import PrimaryButton from '@/app/shared/components/PrimaryButton'
+import { useRouter } from 'next/navigation';
 function PaymentFeedback({success}: {success: boolean}) {
+  const router = useRouter();
   const text = success ? 'Pago completado' : 'Pago cancelado'
+  const handleClick = ()=>{
+    router.replace('/')
+  }
   return (
     <div className="border-[1px] max-w-[490px] border-tertiary shadow-md flex flex-col justify-between p-[32px] rounded-[16px]">  
         <div className='flex flex-col items-center h-[300px] gap-[16px]'>
@@ -10,6 +17,7 @@ function PaymentFeedback({success}: {success: boolean}) {
             <p className='text-font-l font-w-bold'>¡{text}!</p>
             <p className='text-font-xn text-[#647184] text-center'>Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, repellat? Quae, sapiente, quas impedit eum est dignissimos quibusdam, eligendi magnam asperiores nam aspernatur. Tempore quisquam distinctio sit assumenda veniam nisi?</p>
         </div>
+        <PrimaryButton text='Crear nuevo pago' onClick={handleClick} isActive={true} />
     </div>
   )
 }
