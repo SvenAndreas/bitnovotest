@@ -10,6 +10,7 @@ import Timer from "./Timer";
 import { cleanCurrencySymbol } from "@/app/PaymentGateway/utils/cleanCurrencySymbol";
 import useMetamask from "../hooks/useMetamask";
 import { useState } from "react";
+import metamask from "../../../../shared/assets/metamask.svg";
 
 function MakePaymentWrapper() {
   const { order } = usePaymentGatewayContext();
@@ -91,13 +92,19 @@ function MakePaymentWrapper() {
         </div>
 
         <div className="p-[32px] shadow-xl rounded-[10px]">
-          <QRCodeSVG
-            value={paymentUri}
-            size={171}
-            bgColor="#ffffff"
-            fgColor="#000000"
-            level="H"
-          />
+          {activeButton === "Smart QR" ? (
+            <QRCodeSVG
+              value={paymentUri}
+              size={171}
+              bgColor="#ffffff"
+              fgColor="#000000"
+              level="H"
+            />
+          ) : (
+            <div className="h-[171px] w-[171px] flex items-center">
+              <Image width={171} height={171} src={metamask} alt="metamask" />
+            </div>
+          )}
         </div>
 
         <div className="w-[416px] flex flex-col items-center gap-[12px]">

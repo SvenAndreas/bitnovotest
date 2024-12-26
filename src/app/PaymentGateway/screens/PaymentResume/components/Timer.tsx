@@ -8,7 +8,7 @@ import { calculateExpirationTimeInSeconds } from "../utils/calculateExpirationTi
 import { usePaymentGatewayContext } from "@/app/PaymentGateway/context/PaymentGatewayContext";
 
 function Timer() {
-  const { getItem: getOrderDetail, removeItem } =
+  const { getItem: getOrderDetail } =
     useLocalStorage("order_detail");
   const { isLoading } = usePaymentGatewayContext();
   const storedOrderDetail: OrderDetail | null = getOrderDetail();
@@ -40,20 +40,9 @@ function Timer() {
       });
     }, 1000);
 
-    return () => clearInterval(timerInterval); 
+    return () => clearInterval(timerInterval);
   }, [timeLeft]);
 
-  useEffect(() => {
-    const handlePopState = () => {
-      removeItem();
-    };
-
-    window.addEventListener("popstate", handlePopState);
-
-    return () => {
-      window.removeEventListener("popstate", handlePopState);
-    };
-  }, []);
 
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);

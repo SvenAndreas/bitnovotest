@@ -19,7 +19,7 @@ function PaymentResumeScreen() {
     }
   }, [router]);
 
-  useWebSocket(orderCreated.identifier);
+  useWebSocket(orderCreated ? orderCreated.identifier : null);
 
   if (!orderCreated) {
     return null;

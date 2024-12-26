@@ -3,7 +3,7 @@ import { useLocalStorage } from "@/app/shared/hooks/useLocalStorage";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-function useWebSocket(identifier: string) {
+function useWebSocket(identifier: string | null) {
   const {removeItem} = useLocalStorage("order_created");
   const {removeItem: removeOrderDetail} = useLocalStorage("order_detail");
   const {removeItem:removeConcept} = useLocalStorage('order_created_concept');
