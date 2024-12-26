@@ -15,6 +15,7 @@ import { createOrder } from "../../services/api/createOrder";
 import { usePaymentGatewayContext } from "../../context/PaymentGatewayContext";
 import { useRouter } from "next/navigation";
 import { useLocalStorage } from "@/app/shared/hooks/useLocalStorage";
+import { fetchOrderDetail } from "../../services/api/fetchOrderDetail";
 
 function CreatePayment() {
   const {
@@ -49,9 +50,11 @@ function CreatePayment() {
 
   const { currencies } = useGetCurrencies();
 
-  
   const { setItem } = useLocalStorage("order_created");
-  const { setItem:setOrderCreatedConcept } = useLocalStorage('order_created_concept');
+  const { setItem: setOrderDetail } = useLocalStorage("order_detail");
+  const { setItem: setOrderCreatedConcept } = useLocalStorage(
+    "order_created_concept"
+  );
 
   useSetMinMaxCurrencyAmount(
     currencies,
@@ -141,22 +144,21 @@ function CreatePayment() {
       </SectionContainer>
     );
   }
-  const handleSubmit = () => {
-    setIsLoading(true);
-    createOrder(amount, selectedCurrency.symbol)
-      .then((res) => {
-        setOrder(res);
-        setItem(res);
-      })
-      .catch((err) => {
-        console.log(err);
-        setError(err.message);
-      })
-      .finally(() => {
-        setIsLoading(false);
-        setOrderCreatedConcept(concept);
-        router.push("/payment/resume");
-      });
+  const handleSubmit = async () => {
+    try {
+      setIsLoading(true);
+      const res = await createOrder(amount, selectedCurrency.symbol);
+      const orderDetail = await fetchOrderDetail(res.identifier);
+      setOrderDetail(orderDetail);
+      setOrder(res);
+      setItem(res);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setIsLoading(false);
+      setOrderCreatedConcept(concept);
+      router.push("/payment/resume");
+    }
   };
 
   return (

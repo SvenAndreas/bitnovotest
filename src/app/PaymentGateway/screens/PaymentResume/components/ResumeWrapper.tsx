@@ -5,13 +5,18 @@ import { cleanCurrencySymbol } from "@/app/PaymentGateway/utils/cleanCurrencySym
 import imagesMap from "@/app/PaymentGateway/utils/imagesMap";
 import { formatNowDate } from "@/app/PaymentGateway/utils/formatNowDate";
 import { useLocalStorage } from "@/app/shared/hooks/useLocalStorage";
+import { OrderCreated } from "@/app/PaymentGateway/types/order";
+import { OrderDetail } from "@/app/PaymentGateway/types/paymentDetails";
 function ResumeWrapper() {
   const { amount, concept, order } = usePaymentGatewayContext();
   const { getItem } = useLocalStorage("order_created");
+  const { getItem:getOrderDetail } = useLocalStorage("order_detail");
   const { getItem:getOrderCreatedConcept } = useLocalStorage("order_created_concept");
   const orderCreatedConcept = getOrderCreatedConcept();
 
-  const orderCreated = getItem();
+  const orderCreated: OrderCreated = getItem();
+  const orderDetail : OrderDetail = getOrderDetail();
+
   const cleanedSymbol = cleanCurrencySymbol(
     order ? order.input_currency : orderCreated.input_currency
   );
@@ -50,7 +55,7 @@ function ResumeWrapper() {
             <div className="flex items-start gap-[2px]">
               <Image src={verify} width={24} height={24} alt="verify" />
               <p className="font-[600] text-font-xn">
-                Comercio de pruebas de Semega
+                {orderDetail ? orderDetail.merchant_device : 'Comercio de pruebas de Semega' }
               </p>
             </div>
           </div>

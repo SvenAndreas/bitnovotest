@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
-const useCountdownTimer = (initialTime:number, onFinish: () => void) => {
+const useCountdownTimer = (initialTime: number, onFinish: () => void) => {
+
   const [timeLeft, setTimeLeft] = useState(initialTime);
 
   useEffect(() => {
@@ -8,7 +9,7 @@ const useCountdownTimer = (initialTime:number, onFinish: () => void) => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
           clearInterval(timer);
-          onFinish(); 
+          onFinish();
           return 0;
         }
         return prev - 1;

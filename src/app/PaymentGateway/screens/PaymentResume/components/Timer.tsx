@@ -1,46 +1,77 @@
 import timer from "../../../../shared/assets/timer.svg";
 import Image from "next/image";
-import useCountdownTimer from "../hooks/useCountDownTimer";
 import { useRouter } from "next/navigation";
 import { useLocalStorage } from "@/app/shared/hooks/useLocalStorage";
 import { OrderDetail } from "@/app/PaymentGateway/types/paymentDetails";
-import { calculateExpirationTimeInSeconds } from "../utils/calculateExpirationTimeInSeconds";
 import { useEffect, useState } from "react";
+import { calculateExpirationTimeInSeconds } from "../utils/calculateExpirationTimeInSeconds";
 import { usePaymentGatewayContext } from "@/app/PaymentGateway/context/PaymentGatewayContext";
-import { usePathname } from "next/navigation";
 
 function Timer() {
+  const { getItem: getOrderDetail, removeItem } =
+    useLocalStorage("order_detail");
+  const { isLoading } = usePaymentGatewayContext();
+  const storedOrderDetail: OrderDetail | null = getOrderDetail();
   const router = useRouter();
-  const pathname = usePathname();
-  const { getItem: getOrderDetail } = useLocalStorage("order_detail");
-  const { orderDetail } = usePaymentGatewayContext();
-  const storedOrderDetail: OrderDetail = getOrderDetail();
-
-  const [timeLeft, setTimeLeft] = useState(() => {
-    if (orderDetail) {
-      return calculateExpirationTimeInSeconds(orderDetail.expired_time);
-    } else if (storedOrderDetail) {
-      return calculateExpirationTimeInSeconds(storedOrderDetail.expired_time);
-    }
-    return 15 * 60;
-  });
+  const [timeLeft, setTimeLeft] = useState<number | null>(null);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
-    setTimeLeft(
-      orderDetail
-        ? calculateExpirationTimeInSeconds(orderDetail.expired_time)
-        : calculateExpirationTimeInSeconds(storedOrderDetail.expired_time)
-    );
-  }, [pathname, orderDetail, storedOrderDetail]);
+    if (storedOrderDetail && storedOrderDetail.expired_time) {
+      setTimeLeft(
+        calculateExpirationTimeInSeconds(storedOrderDetail.expired_time)
+      );
+      setIsReady(true);
+    } else {
+      setIsReady(false);
+    }
+  }, [storedOrderDetail]);
 
-  const { formattedTime } = useCountdownTimer(timeLeft, () => {
-    router.replace("/payment/feedback/error");
-  });
+  useEffect(() => {
+    if (timeLeft === null || timeLeft <= 0) return;
+    const timerInterval = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev === null || prev <= 1) {
+          clearInterval(timerInterval);
+          router.replace("/payment/feedback/error");
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
 
+    return () => clearInterval(timerInterval); 
+  }, [timeLeft]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      removeItem();
+    };
+
+    window.addEventListener("popstate", handlePopState);
+
+    return () => {
+      window.removeEventListener("popstate", handlePopState);
+    };
+  }, []);
+
+  const formatTime = (seconds: number) => {
+    const minutes = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${minutes}:${secs < 10 ? `0${secs}` : secs}`;
+  };
+
+  if (isLoading || !isReady || timeLeft === null) {
+    <div className="flex w-[68px] h-[24px] items-center gap-[4px]">
+      <Image src={timer} width={24} height={24} alt="timer" />
+    </div>;
+  }
   return (
     <div className="flex items-center gap-[4px]">
       <Image src={timer} width={24} height={24} alt="timer" />
-      <p className="text-font-s font-[600]">{formattedTime}</p>
+      <p className="text-font-s font-[600]">
+        {timeLeft !== null ? formatTime(timeLeft) : ""}
+      </p>
     </div>
   );
 }
