@@ -14,6 +14,8 @@ interface PaymentGatewayContextType {
   setOrder: (order: OrderCreated) => void;
   orderDetail: OrderDetail | null
   setOrderDetail: (orderDetail: OrderDetail) => void
+  setSelectedCurrency: (currency: { symbol: string; name: string }) => void;
+  selectedCurrency: { symbol: string; name: string };
 }
 
 const PaymentGatewayContext = createContext<
@@ -31,6 +33,11 @@ export const PaymentGatewayProvider = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [order, setOrder] = useState<OrderCreated | null>(null);
   const [orderDetail,setOrderDetail] = useState<OrderDetail | null>(null)
+  const [selectedCurrency, setSelectedCurrency] = useState({
+    symbol: "BTC_TEST",
+    name: "Bitcoin Test BTC",
+  })
+  
 
   return (
     <PaymentGatewayContext.Provider
@@ -44,7 +51,9 @@ export const PaymentGatewayProvider = ({
         order,
         setOrder,
         setOrderDetail,
-        orderDetail
+        orderDetail,
+        setSelectedCurrency,
+        selectedCurrency
       }}
     >
       {children}

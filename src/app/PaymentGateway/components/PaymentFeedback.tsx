@@ -4,10 +4,15 @@ import check from '../../shared/assets/success.svg'
 import error from '../../shared/assets/error.svg'
 import PrimaryButton from '@/app/shared/components/PrimaryButton'
 import { useRouter } from 'next/navigation';
+import { usePaymentGatewayContext } from '../context/PaymentGatewayContext'
 function PaymentFeedback({success}: {success: boolean}) {
   const router = useRouter();
+  const {setSelectedCurrency,setAmount,setConcept} = usePaymentGatewayContext()
   const text = success ? 'Pago completado' : 'Pago cancelado'
   const handleClick = ()=>{
+    setSelectedCurrency({symbol: 'BTC_TEST', name: 'Bitcoin Test BTC'})
+    setAmount('')
+    setConcept('')
     router.replace('/')
   }
   return (

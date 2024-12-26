@@ -26,15 +26,11 @@ function CreatePayment() {
     setOrder,
     setIsLoading,
     isLoading,
+    selectedCurrency,
+    setSelectedCurrency
   } = usePaymentGatewayContext();
   const [isSelectCurrencyOpen, setIsSelectCurrencyOpen] = useState(false);
-  const [selectedCurrency, setSelectedCurrency] = useState<{
-    symbol: string;
-    name: string;
-  }>({
-    symbol: "BTC_TEST",
-    name: "Bitcoin Test BTC",
-  });
+  
   const [isFormValid, setIsFormValid] = useState(false);
   const [error, setError] = useState<{
     amount: string;
