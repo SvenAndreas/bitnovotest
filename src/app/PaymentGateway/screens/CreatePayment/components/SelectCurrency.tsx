@@ -49,7 +49,7 @@ function SelectCurrency({
         <p>{cleanedSymbol}</p>
       </div>
       <Image
-        className="w-[16px] h-[16px]"
+        className="w-[16px] h-[16px] ml-auto"
         width={16}
         height={16}
         src={selectedCurrency.symbol === currency.symbol ? tick : arrow}
