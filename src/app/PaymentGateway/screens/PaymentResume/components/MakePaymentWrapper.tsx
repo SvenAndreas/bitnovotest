@@ -48,7 +48,7 @@ function MakePaymentWrapper({
     : paramsCryptoAmount
     ? Number(paramsCryptoAmount)
     : orderCreated.expected_input_amount;
-console.log(paramsCryptoAmount,'PARAMS CRYPTO AMOUNT')
+
   const address = order
     ? order.address
     : paramsAddress
@@ -97,7 +97,7 @@ console.log(paramsCryptoAmount,'PARAMS CRYPTO AMOUNT')
   return (
     <div className="p-[32px]">
       <p className="mb-[24px] font-w-bold text-font-l">Realiza el pago</p>
-      <div className="w-[583px] gap-[24px] border-[1px] flex flex-col rounded-[16px] justify-between p-[32px] items-center border-tertiary shadow-md">
+      <div className="md:w-[583px] gap-[24px] border-[1px] flex flex-col rounded-[16px] justify-between p-[32px] items-center border-tertiary shadow-md">
         <Timer />
 
         <div className="flex gap-[4px]">
@@ -132,8 +132,8 @@ console.log(paramsCryptoAmount,'PARAMS CRYPTO AMOUNT')
           )}
         </div>
 
-        <div className="w-[416px] flex flex-col items-center gap-[12px]">
-          <div className="flex items-center gap-[8px] relative">
+        <div className="md:w-[416px] flex flex-col items-center gap-[12px]">
+          <div className="flex items-center  w-full md:w-auto  justify-between md:justify-normal gap-[8px] relative">
             <p>Enviar</p>
             <p className="font-w-bold text-font-m">
               {expectedInputAmount} {currecenySymbol}
@@ -155,8 +155,8 @@ console.log(paramsCryptoAmount,'PARAMS CRYPTO AMOUNT')
             )}
           </div>
 
-          <div className="flex items-start gap-[8px] relative">
-            <p className="text-cneter max-w-[416px] break-words">{address}</p>
+          <div className="flex items-center  w-full md:w-auto justify-between md:justify-normal md:items-start gap-[8px] relative">
+            <p className="text-center max-w-[185px] md:text-left  md:max-w-[416px] break-words">{address}</p>
             <Image
               className="cursor-pointer"
               onClick={() => copyToClipboard(address, address)}
@@ -172,9 +172,9 @@ console.log(paramsCryptoAmount,'PARAMS CRYPTO AMOUNT')
             )}
           </div>
           {tag && (
-            <div className="flex items-center gap-[8px] relative">
+            <div className="flex items-center w-full md:w-auto justify-between  md:justify-normal md:gap-[8px] relative">
               <Image src={warn} alt="warn" width={24} height={24} />
-              <p className="text-font-s">Etiqueta de destino: {tag}</p>
+              <p className="text-font-s max-w-[180px] text-center md:text-left md:max-w-[416px]">Etiqueta de destino: {tag}</p>
               <Image
                 onClick={() => copyToClipboard(tag, tag)}
                 className="cursor-pointer"

@@ -27,7 +27,7 @@ function Modal({
   return (
     <ReactPortal wrapperId="modal">
       <div className="fixed top-0 left-0 w-screen h-screen bg-neutral-800/50 z-50">
-        <div className="fixed top-1/2 left-1/2 w-fit h-fit bg-bg-primary p-4 rounded translate-x-[-50%] translate-y-[-50%]">
+        <div className="fixed top-1/2 left-1/2 w-full sm:w-fit sm:h-fit bg-bg-primary p-4 rounded translate-x-[-50%] translate-y-[-50%]">
           {React.Children.map(children, (child) => {
             if (React.isValidElement(child)) {
               return React.cloneElement(child, {

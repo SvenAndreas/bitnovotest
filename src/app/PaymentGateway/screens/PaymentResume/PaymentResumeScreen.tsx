@@ -52,7 +52,7 @@ function PaymentResumeScreen() {
 
   return (
     <SectionContainer>
-      <div className="flex items-start gap-[32px]">
+      <div className="flex flex-col items-center md:flex-row md:items-start md:gap-[32px]">
         <ResumeWrapper paramsAmount={paramsAmount} paramsMerchant={paramsMerchant} paramsConcept={paramsConcept} paramsCurrency={paramsCurrency} />
         <MakePaymentWrapper paramsCurrency={paramsCurrency} paramsPaymentUri={paramsPaymentUri} paramsAddress={paramsAddress} paramsTag={paramsTag} paramsCryptoAmount={paramsCryptoAmount} />
         <DisplayInfoModal
