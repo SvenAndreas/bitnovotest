@@ -41,8 +41,8 @@ function ResumeWrapper({paramsAmount,paramsMerchant,paramsConcept,paramsCurrency
   return (
     <div className="p-[32px]">
       <p className="mb-[24px] font-w-bold text-font-l">Resumen del pedido</p>
-      <div className="bg-secondary-l rounded-[16px] p-[32px] flex flex-col gap-[31px] w-[583px]">
-        <div className="h-[44px] border-b-[1px] border-primary-d w-[519px] flex justify-between">
+      <div className="bg-secondary-l rounded-[16px] min-w-[300px] p-[32px] flex flex-col gap-[31px] md:w-[583px]">
+        <div className="h-[44px] border-b-[1px] border-primary-d md:w-[519px] flex justify-between">
           <p className="font-w-bold text-font-m">Importe:</p>
           <p className="font-w-bold text-font-m">
             {amount ? amount : paramsAmount}
@@ -50,10 +50,10 @@ function ResumeWrapper({paramsAmount,paramsMerchant,paramsConcept,paramsCurrency
           </p>
         </div>
 
-        <div className="h-[44px] border-b-[1px] border-primary-d w-[519px] flex justify-between">
+        <div className="h-[44px] border-b-[1px] border-primary-d md:w-[519px] flex justify-between">
           <p className="font-w-bold text-font-xn">Moneda seleccionada</p>
           <div className="flex items-start ">
-            <div className="flex items-center gap-[10px]">
+            <div className="flex items-center gap-[5px] md:gap-[10px]">
               <Image
                 src={icon}
                 width={20}
@@ -66,7 +66,7 @@ function ResumeWrapper({paramsAmount,paramsMerchant,paramsConcept,paramsCurrency
         </div>
 
         <div className="flex flex-col border-b-[1px] border-primary-d ">
-          <div className="h-[44px] w-[519px] flex justify-between">
+          <div className="h-[44px] md:w-[519px] flex justify-between">
             <p className="font-w-bold text-font-xn">Comercio:</p>
             <div className="flex items-start gap-[2px]">
               <Image src={verify} width={24} height={24} alt="verify" />
@@ -80,13 +80,13 @@ function ResumeWrapper({paramsAmount,paramsMerchant,paramsConcept,paramsCurrency
             </div>
           </div>
 
-          <div className="h-[44px] w-[519px] flex justify-between">
+          <div className="h-[44px] md:w-[519px] flex justify-between">
             <p className="font-w-bold text-font-xn">Fecha:</p>
             <p className="font-[600] text-font-xn">{date}</p>
           </div>
         </div>
 
-        <div className="h-[44px] w-[519px] flex justify-between">
+        <div className="h-[44px] md:w-[519px] flex justify-between">
           <p className="font-w-bold text-font-xn">Concepto:</p>
           <p className="font-[600] text-font-xn">
             {concept

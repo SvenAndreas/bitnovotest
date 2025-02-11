@@ -160,7 +160,7 @@ function CreatePayment() {
 
   return (
     <SectionContainer>
-      <div className="p-[32px] rounded-[6px] border-tertiary shadow-md border-[1px] w-[673px] marker:h-[530px] flex flex-col gap-[32px]">
+      <div className="p-[32px] rounded-[6px] border-tertiary shadow-md border-[1px] md:w-[673px] marker:h-[530px] flex flex-col gap-[32px]">
         <h1 className="text-center font-w-bold text-font-xl">Crear pago</h1>
         <div className="flex flex-col gap-[32px]">
           <InputCreatePayment

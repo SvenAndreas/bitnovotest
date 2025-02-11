@@ -13,7 +13,7 @@ function SelectInputCreatePayment({
   const cleanedSymbol = selectedCurrency.symbol.replace(/_TEST.*/, "");
   const icon = imagesMap[selectedCurrency.symbol];
   return (
-    <div onClick={handleOpenSelectCurreny} className="w-[609px] cursor-pointer h-[80px] font-w-bold">
+    <div onClick={handleOpenSelectCurreny} className="md:w-[609px] cursor-pointer h-[80px] font-w-bold">
       <p>Seleccionar moneda</p>
       <div className="px-[16px] mt-[4px] py-[18px] border-[1px] border-secondary rounded-[6px]">
         <div className="flex gap-[8px] w-full items-center">

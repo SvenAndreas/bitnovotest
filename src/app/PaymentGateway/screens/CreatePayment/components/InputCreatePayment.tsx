@@ -14,7 +14,7 @@ function InputCreatePayment({
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
-    <label className="w-[609px] h-[80px] font-w-bold ">
+    <label className="md:w-[609px] h-[80px] font-w-bold ">
       {label}
       <input
         value={value}

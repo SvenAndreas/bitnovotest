@@ -16,7 +16,7 @@ function DisplayInfoModal({
 }) {
   return (
     <Modal handleClose={handleClose} isOpen={isOpen}>
-      <div className="border-[1px] gap-3 bg-bg items-center max-w-[490px] border-tertiary shadow-md flex flex-col  p-[32px] rounded-[16px]">
+      <div className="border-[1px] gap-3 bg-bg items-center md:max-w-[490px] border-tertiary shadow-md flex flex-col  p-[32px] rounded-[16px]">
         <div className="place-items-center">
           <Image src={warning} alt={"warning"} width={80} height={80} />
           <p className="text-font-l font-w-bold">¡Pago pendiente!</p>

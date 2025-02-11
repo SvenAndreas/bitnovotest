@@ -28,9 +28,9 @@ function SelectCurrenciesWrapper({
     setSearchTerm(event.target.value);
   };
   return (
-    <div className="p-[24px] z-100 rounded-[6px] border-tertiary shadow-md border-[1px] w-[673px] h-[588px] flex flex-col gap-[32px]">
+    <div className="p-[24px] z-100 rounded-[6px] border-tertiary shadow-md border-[1px] md:w-[673px] h-[588px] flex flex-col gap-[32px]">
       <div className="flex justify-between">
-        <h2 className="font-w-bold text-font-m">Seleccionar criptomoneda</h2>
+        <h2 className="font-w-bold text-font-n md:text-font-m">Seleccionar criptomoneda</h2>
         <Image
           width={22}
           className="cursor-pointer w-[22px] h-[22px]"
