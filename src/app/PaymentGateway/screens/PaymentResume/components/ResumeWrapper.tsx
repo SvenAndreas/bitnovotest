@@ -7,20 +7,35 @@ import { formatNowDate } from "@/app/PaymentGateway/utils/formatNowDate";
 import { useLocalStorage } from "@/app/shared/hooks/useLocalStorage";
 import { OrderCreated } from "@/app/PaymentGateway/types/order";
 import { OrderDetail } from "@/app/PaymentGateway/types/paymentDetails";
-function ResumeWrapper() {
+
+interface ResumeWrapperProps{
+  paramsAmount:string | null,
+  paramsMerchant:string | null,
+  paramsConcept:string | null,
+  paramsCurrency:string | null
+}
+function ResumeWrapper({paramsAmount,paramsMerchant,paramsConcept,paramsCurrency}:ResumeWrapperProps) {
+
   const { amount, concept, order } = usePaymentGatewayContext();
   const { getItem } = useLocalStorage("order_created");
-  const { getItem:getOrderDetail } = useLocalStorage("order_detail");
-  const { getItem:getOrderCreatedConcept } = useLocalStorage("order_created_concept");
+  const { getItem: getOrderDetail } = useLocalStorage("order_detail");
+  const { getItem: getOrderCreatedConcept } = useLocalStorage(
+    "order_created_concept"
+  );
   const orderCreatedConcept = getOrderCreatedConcept();
 
-  const orderCreated: OrderCreated = getItem();
-  const orderDetail : OrderDetail = getOrderDetail();
 
+  const orderCreated: OrderCreated = getItem();
+  const orderDetail: OrderDetail = getOrderDetail();
   const cleanedSymbol = cleanCurrencySymbol(
-    order ? order.input_currency : orderCreated.input_currency
+    order
+      ? order.input_currency
+      : paramsCurrency
+      ? paramsCurrency
+      : orderCreated.input_currency
   );
-  const icon = imagesMap[order ? order.input_currency : orderCreated.input_currency];
+  const icon =
+    imagesMap[order ? order.input_currency : orderCreated.input_currency];
 
   const date = formatNowDate();
   return (
@@ -30,7 +45,8 @@ function ResumeWrapper() {
         <div className="h-[44px] border-b-[1px] border-primary-d w-[519px] flex justify-between">
           <p className="font-w-bold text-font-m">Importe:</p>
           <p className="font-w-bold text-font-m">
-            {amount ? amount : orderCreated.expected_input_amount} EUR
+            {amount ? amount : paramsAmount}
+            EUR
           </p>
         </div>
 
@@ -55,7 +71,11 @@ function ResumeWrapper() {
             <div className="flex items-start gap-[2px]">
               <Image src={verify} width={24} height={24} alt="verify" />
               <p className="font-[600] text-font-xn">
-                {orderDetail ? orderDetail.merchant_device : 'Comercio de pruebas de Semega' }
+                {paramsMerchant
+                  ? paramsMerchant
+                  : orderDetail.merchant_device
+                  ? orderDetail.merchant_device
+                  : "Comercio de pruebas de Semega"}
               </p>
             </div>
           </div>
@@ -68,7 +88,13 @@ function ResumeWrapper() {
 
         <div className="h-[44px] w-[519px] flex justify-between">
           <p className="font-w-bold text-font-xn">Concepto:</p>
-          <p className="font-[600] text-font-xn">{concept ? concept : orderCreatedConcept}</p>
+          <p className="font-[600] text-font-xn">
+            {concept
+              ? concept
+              : paramsConcept
+              ? paramsConcept
+              : orderCreatedConcept}
+          </p>
         </div>
       </div>
     </div>

@@ -141,6 +141,7 @@ function CreatePayment() {
     );
   }
   const handleSubmit = async () => {
+   
     try {
       setIsLoading(true);
       const res = await createOrder(amount, selectedCurrency.symbol);
@@ -148,18 +149,18 @@ function CreatePayment() {
       setOrderDetail(orderDetail);
       setOrder(res);
       setItem(res);
+      setOrderCreatedConcept(concept);
+      router.push(`/payment/resume?currency=${selectedCurrency.symbol}&amount=${amount}&concept=${concept}&identifier=${res.identifier}&merchant=${orderDetail.merchant_device}&address=${orderDetail.address}&crypto_amount=${res.expected_input_amount}&payment_uri=${res.payment_uri}${orderDetail.tag_memo ? `&tag=${orderDetail.tag_memo}` : ""}`);
     } catch (err) {
       console.log(err);
     } finally {
       setIsLoading(false);
-      setOrderCreatedConcept(concept);
-      router.push("/payment/resume");
     }
   };
 
   return (
     <SectionContainer>
-      <div className="p-[32px] rounded-[6px] border-tertiary shadow-md border-[1px] w-[673px] h-[530px] flex flex-col gap-[32px]">
+      <div className="p-[32px] rounded-[6px] border-tertiary shadow-md border-[1px] w-[673px] marker:h-[530px] flex flex-col gap-[32px]">
         <h1 className="text-center font-w-bold text-font-xl">Crear pago</h1>
         <div className="flex flex-col gap-[32px]">
           <InputCreatePayment

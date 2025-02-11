@@ -11,8 +11,20 @@ import { cleanCurrencySymbol } from "@/app/PaymentGateway/utils/cleanCurrencySym
 import useMetamask from "../hooks/useMetamask";
 import { useState } from "react";
 import metamask from "../../../../shared/assets/metamask.svg";
-
-function MakePaymentWrapper() {
+interface MakePaymentWrapperProps {
+  paramsTag: string | null;
+  paramsAddress: string | null;
+  paramsCryptoAmount: string | null;
+  paramsCurrency: string | null;
+  paramsPaymentUri: string | null;
+}
+function MakePaymentWrapper({
+  paramsTag,
+  paramsAddress,
+  paramsCryptoAmount,
+  paramsCurrency,
+  paramsPaymentUri,
+}: MakePaymentWrapperProps) {
   const { order } = usePaymentGatewayContext();
   const { getItem } = useLocalStorage("order_created");
   const orderCreated: OrderCreated = getItem();
@@ -22,18 +34,31 @@ function MakePaymentWrapper() {
   );
   const [isWeb3Enabled] = useState(
     orderCreated.input_currency === "ETH_TEST5" ||
-      order?.input_currency === "ETH_TEST5"
+      order?.input_currency === "ETH_TEST5" ||
+      paramsCurrency === "ETH_TEST5"
   );
-  const paymentUri = order ? order.payment_uri : orderCreated.payment_uri;
+  const paymentUri = order
+    ? order.payment_uri
+    : paramsPaymentUri
+    ? paramsPaymentUri
+    : orderCreated.payment_uri;
 
   const expectedInputAmount = order
     ? order.expected_input_amount
+    : paramsCryptoAmount
+    ? Number(paramsCryptoAmount)
     : orderCreated.expected_input_amount;
+console.log(paramsCryptoAmount,'PARAMS CRYPTO AMOUNT')
+  const address = order
+    ? order.address
+    : paramsAddress
+    ? paramsAddress
+    : orderCreated.address;
 
-  const address = order ? order.address : orderCreated.address;
+  const tag = order?.tag_memo ? order.tag_memo : paramsTag ? paramsTag : "";
 
   const currecenySymbol = cleanCurrencySymbol(
-    order ? order.input_currency : orderCreated.input_currency
+    order ? order.input_currency : paramsCurrency ? paramsCurrency : orderCreated.input_currency
   );
 
   const { connectMetamask, sendTransaction } = useMetamask();
@@ -146,21 +171,19 @@ function MakePaymentWrapper() {
               </div>
             )}
           </div>
-          {order?.tag_memo && (
+          {tag && (
             <div className="flex items-center gap-[8px] relative">
               <Image src={warn} alt="warn" width={24} height={24} />
-              <p className="text-font-s">
-                Etiqueta de destino: {order.tag_memo}
-              </p>
+              <p className="text-font-s">Etiqueta de destino: {tag}</p>
               <Image
-                onClick={() => copyToClipboard(order.tag_memo, order.tag_memo)}
+                onClick={() => copyToClipboard(tag, tag)}
                 className="cursor-pointer"
                 src={copy}
                 alt="copy"
                 width={18}
                 height={18}
               />
-              {copiedField === order.tag_memo && (
+              {copiedField === tag && (
                 <div className="bg-primary-d right-[-78px] top-[-7px] absolute text-white font-w-bold p-1 rounded-lg">
                   ¡Copiado!
                 </div>
